@@ -1,19 +1,15 @@
-create database TecnoHogarCenter
+create database TecnoHogarCenter;
 
-show DATABASES;
+SHOW DATABASES;
 
 use TecnoHogarCenter;
 
 #Creación de Tablas 
-CREATE TABLE producto (
-    id_producto INT PRIMARY KEY,
+CREATE TABLE proveedores (
+    RUC CHAR(13) PRIMARY KEY,
     nombre VARCHAR(50),
-    marca VARCHAR(30),
-    categoria VARCHAR(20),
-    precio DECIMAL(10,2),
-    stock INT,
-    proveedor_id CHAR(13),
-    FOREIGN KEY (proveedor_id) REFERENCES provedores(RUC)
+    telefono VARCHAR(15),
+    correo VARCHAR(50)
 );
 
 CREATE Table cliente(
@@ -24,13 +20,16 @@ CREATE Table cliente(
     direccion VARCHAR(50)
 );
 
-CREATE TABLE provedores (
-    RUC CHAR(13) PRIMARY KEY,
+CREATE TABLE producto (
+    id_producto INT PRIMARY KEY,
     nombre VARCHAR(50),
-    telefono VARCHAR(15),
-    correo VARCHAR(50)
+    marca VARCHAR(30),
+    categoria VARCHAR(20),
+    precio DECIMAL(10,2),
+    stock INT,
+    proveedor_id CHAR(13),
+    FOREIGN KEY (proveedor_id) REFERENCES proveedores(RUC)
 );
-
 CREATE TABLE empleado (
     id_empleado INT PRIMARY KEY,
     nombre VARCHAR(50),
@@ -51,13 +50,25 @@ CREATE TABLE proveedor_productos (
 
     CONSTRAINT pp_proveedor_fk
         FOREIGN KEY (proveedor_ruc)
-        REFERENCES provedores(RUC),
+        REFERENCES proveedores(RUC),
 
     CONSTRAINT pp_producto_fk
         FOREIGN KEY (producto_id)
         REFERENCES producto(id_producto)
 );
 
+CREATE TABLE productos_frecuentes (
+    cedula_cliente INT,
+    id_producto INT,
+    frecuencia ENUM('DIA','SEM','MES'),
+    cantidad INT,
+    descuento DECIMAL(5,2) DEFAULT 0,
+
+    PRIMARY KEY (cedula_cliente, id_producto),
+
+    FOREIGN KEY (cedula_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
 
 #Tabla Empresa Guarda los datos del negocio
 CREATE TABLE empresa (
@@ -130,6 +141,19 @@ CREATE TABLE clientes_frecuentes (
 ALTER TABLE clientes_frecuentes
 MODIFY descuento DECIMAL(5,2) DEFAULT 0;
 
+#Registro de Provedores
+INSERT INTO proveedores
+VALUES ('17000000001', 'Indurama Ecuador', 'Jose Cortez', 'indurama@gmail.ec');
+
+INSERT INTO proveedores
+VALUES ('17000000002', 'Mabe Ecuador', 'Armando Tapia', 'mabe@gmail.ec');
+
+INSERT INTO proveedores
+VALUES ('17000000003', 'LG Ecuador', 'Luis Caza', 'lgecuador@gmail.ec');
+
+INSERT INTO proveedores
+VALUES ('17000000004', 'Samsung Ecuador', 'Amelia Sanchez', 'samsung@gmail.ec');
+
 #Registro de Productos
 INSERT INTO producto
 VALUES (1, 'Cocina de gas', 'Indurama', 'Linea Blanca', 300, 5, '17000000001');
@@ -195,25 +219,12 @@ INSERT INTO producto
 VALUES (20, 'Monitor', 'Samsung Ecuador', 'Linea Gris', 150, 10, '17000000004');
 
 #Registrp de Cliente
-INSERT INTO cliente
+INSERT INTO cliente 
 VALUES( 1752004956, 'Jorge Lopez', '0954123689', 'jorge12@gmail.com', 'Pintado');
 INSERT INTO cliente
 VALUES( 1726485103, 'Rosita Raza', '0925147852', 'rosa13@gmail.com', 'Mascota');
 INSERT INTO cliente
 VALUES( 1701245741, 'Maritza Alvaro', '0923145781', 'maritza14@gmail.com', 'Magdalena');
-
-#Registro de Provedores
-INSERT INTO provedores
-VALUES ('17000000001', 'Indurama Ecuador', 'Jose Cortez', 'indurama@gmail.ec');
-
-INSERT INTO provedores
-VALUES ('17000000002', 'Mabe Ecuador', 'Armando Tapia', 'mabe@gmail.ec');
-
-INSERT INTO provedores
-VALUES ('17000000003', 'LG Ecuador', 'Luis Caza', 'lgecuador@gmail.ec');
-
-INSERT INTO provedores
-VALUES ('17000000004', 'Samsung Ecuador', 'Amelia Sanchez', 'samsung@gmail.ec');
 
 #Registo de Empleados
 INSERT INTO empleado
@@ -234,7 +245,7 @@ VALUES( 1120336047, 'Nathaly Vizcaino', 'Encargado', 500, '09:00:00', '18:00:00'
 INSERT INTO empleado
 VALUES( 1520013690, 'Isaac Lema', 'Administrador', 600, '10:00:00', '19:00:00');
 
-#Regintro de Empresa 
+#Registro de Empresa 
 INSERT INTO empresa
 VALUES ('17999999999', 'Tecno Hogar Center', 'Av. Amazonas y Patria', '022345678', 'contacto@tecnohogar.ec');
 
@@ -296,15 +307,26 @@ VALUES ('17000000003', 11, 480.00, 5, 93);
 INSERT INTO proveedor_productos
 VALUES ('17000000004', 16, 300.00, 4, 100);
 
+#Registro de Productos Fecuentes 
+INSERT INTO productos_frecuentes
+VALUES (1752004956, 1, 'MES', 2, 0.00);
+
+INSERT INTO productos_frecuentes
+VALUES (1701245741, 2, 'MES', 2, 5.00);
+
+INSERT INTO productos_frecuentes
+VALUES (1726485103, 9, 'SEM', 1, 10.00);
+
 #Comado para ejecutar tabla 
 select * from producto;
 select * from cliente;
-select * from provedores;
+select * from proveedores;
 select * from empleado;
 SELECT * FROM empresa;
 SELECT *  FROM facturas;
 SELECT * FROM facturadetalle;
 SELECT * FROM productos_alternativos;
 SELECT * FROM clientes_frecuentes;
-SELECT * FROM proveedor_productos
+SELECT * FROM proveedor_productos;
+SELECT * FROM productos_frecuentes;
 
