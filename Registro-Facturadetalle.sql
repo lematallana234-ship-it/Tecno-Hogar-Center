@@ -1,0 +1,52 @@
+use TecnoHogarCenter;
+INSERT INTO facturadetalle VALUES ('0000000004', 1, 1, 300);
+INSERT INTO facturadetalle VALUES ('0000000005', 2, 2, 450);
+INSERT INTO facturadetalle VALUES ('0000000006', 3, 1, 520);
+INSERT INTO facturadetalle VALUES ('0000000007', 4, 1, 540);
+INSERT INTO facturadetalle VALUES ('0000000008', 5, 2, 350);
+INSERT INTO facturadetalle VALUES ('0000000009', 6, 1, 320);
+INSERT INTO facturadetalle VALUES ('0000000010', 7, 2, 450);
+INSERT INTO facturadetalle VALUES ('0000000011', 8, 1, 530);
+INSERT INTO facturadetalle VALUES ('0000000012', 9, 1, 440);
+INSERT INTO facturadetalle VALUES ('0000000013', 10, 2, 250);
+
+INSERT INTO facturadetalle VALUES ('0000000014', 11, 1, 520);
+INSERT INTO facturadetalle VALUES ('0000000015', 12, 1, 550);
+INSERT INTO facturadetalle VALUES ('0000000016', 13, 2, 430);
+INSERT INTO facturadetalle VALUES ('0000000017', 14, 1, 440);
+INSERT INTO facturadetalle VALUES ('0000000018', 15, 2, 250);
+INSERT INTO facturadetalle VALUES ('0000000019', 16, 1, 320);
+INSERT INTO facturadetalle VALUES ('0000000020', 17, 1, 250);
+INSERT INTO facturadetalle VALUES ('0000000021', 18, 2, 530);
+INSERT INTO facturadetalle VALUES ('0000000022', 19, 1, 440);
+INSERT INTO facturadetalle VALUES ('0000000023', 20, 2, 150);
+
+INSERT INTO facturadetalle VALUES ('0000000024', 1, 2, 300);
+INSERT INTO facturadetalle VALUES ('0000000025', 2, 1, 450);
+INSERT INTO facturadetalle VALUES ('0000000026', 3, 2, 520);
+INSERT INTO facturadetalle VALUES ('0000000027', 4, 1, 540);
+INSERT INTO facturadetalle VALUES ('0000000028', 5, 1, 350);
+INSERT INTO facturadetalle VALUES ('0000000029', 6, 2, 320);
+INSERT INTO facturadetalle VALUES ('0000000030', 7, 1, 450);
+INSERT INTO facturadetalle VALUES ('0000000031', 8, 2, 530);
+INSERT INTO facturadetalle VALUES ('0000000032', 9, 1, 440);
+INSERT INTO facturadetalle VALUES ('0000000033', 10, 1, 250);
+
+INSERT INTO facturadetalle VALUES ('0000000034', 11, 2, 520);
+INSERT INTO facturadetalle VALUES ('0000000035', 12, 1, 550);
+INSERT INTO facturadetalle VALUES ('0000000036', 13, 1, 430);
+INSERT INTO facturadetalle VALUES ('0000000037', 14, 2, 440);
+INSERT INTO facturadetalle VALUES ('0000000038', 15, 1, 250);
+INSERT INTO facturadetalle VALUES ('0000000039', 16, 2, 320);
+INSERT INTO facturadetalle VALUES ('0000000040', 17, 1, 250);
+INSERT INTO facturadetalle VALUES ('0000000041', 18, 1, 530);
+INSERT INTO facturadetalle VALUES ('0000000042', 19, 2, 440);
+INSERT INTO facturadetalle VALUES ('0000000043', 20, 1, 150);
+
+INSERT INTO facturadetalle VALUES ('0000000044', 1, 1, 300);
+INSERT INTO facturadetalle VALUES ('0000000045', 2, 2, 450);
+INSERT INTO facturadetalle VALUES ('0000000046', 3, 1, 520);
+INSERT INTO facturadetalle VALUES ('0000000047', 4, 2, 540);
+INSERT INTO facturadetalle VALUES ('0000000048', 5, 1, 350);
+INSERT INTO facturadetalle VALUES ('0000000049', 6, 1, 320);
+INSERT INTO facturadetalle VALUES ('0000000050', 7, 2, 450);

@@ -130,7 +130,6 @@ CREATE TABLE clientes_frecuentes (
     cliente_id INT,
     producto_id INT,
     frecuencia CHAR(3),        -- Ej: SEM (semanal), MEN (mensual)
-    paquete CHAR(2),           -- Ej: SI/NO, si aplica paquete promocional
     cantidad INT,
     descuento DECIMAL(5,2),
     PRIMARY KEY (cliente_id, producto_id),
@@ -285,11 +284,11 @@ VALUES (5, 9);
 #Registro de clientes frecuentes 
        -- Maritza Alvaro 2 Refrigeradoras Indurama cada mes con 5% de descuento
 INSERT INTO clientes_frecuentes 
-VALUES (1701245741, 2, 'MEN', 'NO', 2, 5.00);
+VALUES (1701245741, 2, 'MEN', 2, 5.00);
 
        -- Rosita Raza 1 Microondas Mabe cada semana con 10% de descuento
 INSERT INTO clientes_frecuentes 
-VALUES (1726485103, 9, 'SEM', 'NO', 1, 10.00);
+VALUES (1726485103, 9, 'SEM', 1, 10.00);
 
 #Registro PROVEEDOR_PRODUCTOS
 INSERT INTO proveedor_productos
