@@ -5,6 +5,13 @@ SHOW DATABASES;
 use TecnoHogarCenter;
 
 #Creación de Tablas 
+CREATE TABLE dueño (
+    cedula INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    cargo VARCHAR(20),
+    telefono VARCHAR(15)
+);
+
 CREATE TABLE proveedores (
     RUC CHAR(13) PRIMARY KEY,
     nombre VARCHAR(50),
@@ -139,6 +146,8 @@ CREATE TABLE clientes_frecuentes (
 
 ALTER TABLE clientes_frecuentes
 MODIFY descuento DECIMAL(5,2) DEFAULT 0;
+#Datos del DUEÑO 
+INSERT INTO dueño VALUES (1752004828, 'Roger Tallana', 'Dueño', '0998626028');
 
 #Registro de Provedores
 INSERT INTO proveedores
@@ -244,6 +253,10 @@ VALUES( 1120336047, 'Nathaly Vizcaino', 'Encargado', 500, '09:00:00', '18:00:00'
 INSERT INTO empleado
 VALUES( 1520013690, 'Isaac Lema', 'Administrador', 600, '10:00:00', '19:00:00');
 
+INSERT INTO empleado (id_empleado, nombre, cargo, sueldo, hora_entrada, hora_salida, id_jefe)
+VALUES (1752004828, 'Roger Tallana', 'Dueño', 0, '00:00:00', '00:00:00', NULL);
+
+
 #Registro de Empresa 
 INSERT INTO empresa
 VALUES ('17999999999', 'Tecno Hogar Center', 'Av. Amazonas y Patria', '022345678', 'contacto@tecnohogar.ec');
@@ -317,6 +330,7 @@ INSERT INTO productos_frecuentes
 VALUES (1726485103, 9, 'SEM', 1, 10.00);
 
 #Comado para ejecutar tabla 
+SELECT * FROM dueño;
 select * from producto;
 select * from cliente;
 select * from proveedores;

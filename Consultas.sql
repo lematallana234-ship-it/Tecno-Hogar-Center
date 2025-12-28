@@ -32,7 +32,7 @@ WHERE id_producto = 2;
 --- Clientes cuyo nombre inicia con A
 SELECT id_cliente, nombre
 FROM cliente
-WHERE nombre LIKE 'R%';
+WHERE nombre LIKE 'L%';
 
 --- Productos que inician con M
 SELECT id_producto, nombre
@@ -186,3 +186,17 @@ SELECT
     'EFECTIVO' AS forma_pago
 FROM facturas
 WHERE facturanumero = '0000000100';
+
+-- Una condición de pertenencia a una lista de valores (IN) aplicada a un atributo de tipo cadena de caracteres ya dale el codigo con el titulo, ojo con mis datos que tengo y dime lo que hace con 1 ejemplo
+SELECT *
+FROM cliente
+WHERE nombre IN ('Carlos Mena', 'Andrea Paredes', 'Lorena Sánchez');
+
+-- Dos condiciones similares a la anterior, proyecta en tres columnas y crea una vista para contenerla
+CREATE VIEW vista_clientes_condiciones_in AS
+SELECT id_cliente, nombre, direccion
+FROM cliente
+WHERE nombre IN ('Carlos Mena')
+  AND id_cliente IN (1710000005, 1710000001);
+
+SELECT * FROM vista_clientes_condiciones_in;
