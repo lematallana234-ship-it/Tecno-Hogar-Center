@@ -1,47 +1,46 @@
-use TecnoHogarCenter;
-INSERT INTO producto VALUES (21,'Extractor de Jugos','Indurama','Electro Menores',180,8,'17000000001');
-INSERT INTO producto VALUES (22,'Freidora de Aire','Indurama','Electro Menores',220,6,'17000000001');
-INSERT INTO producto VALUES (23,'Olla Arrocera','Indurama','Electro Menores',95,12,'17000000001');
-INSERT INTO producto VALUES (24,'Sanduchera','Indurama','Electro Menores',70,15,'17000000001');
-INSERT INTO producto VALUES (25,'Cafetera Eléctrica','Indurama','Electro Menores',130,10,'17000000001');
-INSERT INTO producto VALUES (26,'Plancha de Vapor','Indurama','Hogar',85,14,'17000000001');
-INSERT INTO producto VALUES (27,'Batidora Manual','Indurama','Electro Menores',110,9,'17000000001');
-INSERT INTO producto VALUES (28,'Tostadora','Indurama','Electro Menores',75,13,'17000000001');
-INSERT INTO producto VALUES (29,'Dispensador de Agua','Indurama','Hogar',260,4,'17000000001');
-INSERT INTO producto VALUES (30,'Campana Purificadora','Indurama','Linea Blanca',310,5,'17000000001');
+USE TecnoHogarCenter;
 
+INSERT INTO producto VALUES
+(21,'Extractor de Jugos','Indurama','Electro Menores',180,8,'17000000001'),
+(22,'Freidora de Aire','Indurama','Electro Menores',220,6,'17000000001'),
+(23,'Olla Arrocera','Indurama','Electro Menores',95,12,'17000000001'),
+(24,'Sanduchera','Indurama','Electro Menores',70,15,'17000000001'),
+(25,'Cafetera Eléctrica','Indurama','Electro Menores',130,10,'17000000001'),
+(26,'Plancha de Vapor','Indurama','Hogar',85,14,'17000000001'),
+(27,'Batidora Manual','Indurama','Electro Menores',110,9,'17000000001'),
+(28,'Tostadora','Indurama','Electro Menores',75,13,'17000000001'),
+(29,'Dispensador de Agua','Indurama','Hogar',260,4,'17000000001'),
+(30,'Campana Purificadora','Indurama','Linea Blanca',310,5,'17000000001'),
 
-INSERT INTO producto VALUES (31,'Aspiradora','Mabe Ecuador','Hogar',210,7,'17000000002');
-INSERT INTO producto VALUES (32,'Ventilador de Piso','Mabe Ecuador','Climatizacion',120,10,'17000000002');
-INSERT INTO producto VALUES (33,'Ventilador de Pared','Mabe Ecuador','Climatizacion',140,8,'17000000002');
-INSERT INTO producto VALUES (34,'Deshumidificador','Mabe Ecuador','Climatizacion',290,4,'17000000002');
-INSERT INTO producto VALUES (35,'Purificador de Aire','Mabe Ecuador','Climatizacion',330,3,'17000000002');
-INSERT INTO producto VALUES (36,'Calefactor Eléctrico','Mabe Ecuador','Climatizacion',160,6,'17000000002');
-INSERT INTO producto VALUES (37,'Aspiradora Vertical','Mabe Ecuador','Hogar',240,5,'17000000002');
-INSERT INTO producto VALUES (38,'Lavadora Portátil','Mabe Ecuador','Hogar',280,4,'17000000002');
-INSERT INTO producto VALUES (39,'Horno Eléctrico','Mabe Ecuador','Electro Menores',260,7,'17000000002');
-INSERT INTO producto VALUES (40,'Extractor de Aire','Mabe Ecuador','Hogar',190,6,'17000000002');
+(31,'Aspiradora','Mabe Ecuador','Hogar',210,7,'17000000002'),
+(32,'Ventilador de Piso','Mabe Ecuador','Climatizacion',120,10,'17000000002'),
+(33,'Ventilador de Pared','Mabe Ecuador','Climatizacion',140,8,'17000000002'),
+(34,'Deshumidificador','Mabe Ecuador','Climatizacion',290,4,'17000000002'),
+(35,'Purificador de Aire','Mabe Ecuador','Climatizacion',330,3,'17000000002'),
+(36,'Calefactor Eléctrico','Mabe Ecuador','Climatizacion',160,6,'17000000002'),
+(37,'Aspiradora Vertical','Mabe Ecuador','Hogar',240,5,'17000000002'),
+(38,'Lavadora Portátil','Mabe Ecuador','Hogar',280,4,'17000000002'),
+(39,'Horno Eléctrico','Mabe Ecuador','Electro Menores',260,7,'17000000002'),
+(40,'Extractor de Aire','Mabe Ecuador','Hogar',190,6,'17000000002'),
 
-INSERT INTO producto VALUES (41,'Parlante Bluetooth','LG Ecuador','Audio',180,12,'17000000003');
-INSERT INTO producto VALUES (42,'Parlante Torre','LG Ecuador','Audio',520,4,'17000000003');
-INSERT INTO producto VALUES (43,'Teatro en Casa','LG Ecuador','Audio',690,3,'17000000003');
-INSERT INTO producto VALUES (44,'Reproductor Blu-ray','LG Ecuador','Tecnologia',260,5,'17000000003');
-INSERT INTO producto VALUES (45,'Proyector','LG Ecuador','Tecnologia',880,2,'17000000003');
-INSERT INTO producto VALUES (46,'Monitor Smart','LG Ecuador','Tecnologia',420,6,'17000000003');
-INSERT INTO producto VALUES (47,'Soundbar Compacta','LG Ecuador','Audio',350,7,'17000000003');
-INSERT INTO producto VALUES (48,'Auriculares Inalámbricos','LG Ecuador','Audio',210,9,'17000000003');
-INSERT INTO producto VALUES (49,'Cámara Web','LG Ecuador','Tecnologia',130,10,'17000000003');
-INSERT INTO producto VALUES (50,'Control Smart Universal','LG Ecuador','Tecnologia',90,15,'17000000003');
+(41,'Parlante Bluetooth','LG Ecuador','Audio',180,12,'17000000003'),
+(42,'Parlante Torre','LG Ecuador','Audio',520,4,'17000000003'),
+(43,'Teatro en Casa','LG Ecuador','Audio',690,3,'17000000003'),
+(44,'Reproductor Blu-ray','LG Ecuador','Tecnologia',260,5,'17000000003'),
+(45,'Proyector','LG Ecuador','Tecnologia',880,2,'17000000003'),
+(46,'Monitor Smart','LG Ecuador','Tecnologia',420,6,'17000000003'),
+(47,'Soundbar Compacta','LG Ecuador','Audio',350,7,'17000000003'),
+(48,'Auriculares Inalámbricos','LG Ecuador','Audio',210,9,'17000000003'),
+(49,'Cámara Web','LG Ecuador','Tecnologia',130,10,'17000000003'),
+(50,'Control Smart Universal','LG Ecuador','Tecnologia',90,15,'17000000003'),
 
-
-
-INSERT INTO producto VALUES (51,'Parlante Bluetooth','Samsung Ecuador','Audio',190,14,'17000000004');
-INSERT INTO producto VALUES (52,'Sound Tower','Samsung Ecuador','Audio',560,4,'17000000004');
-INSERT INTO producto VALUES (53,'Audífonos Inalámbricos','Samsung Ecuador','Audio',230,10,'17000000004');
-INSERT INTO producto VALUES (54,'Reloj Inteligente','Samsung Ecuador','Tecnologia',320,6,'17000000004');
-INSERT INTO producto VALUES (55,'Cámara de Seguridad','Samsung Ecuador','Tecnologia',280,8,'17000000004');
-INSERT INTO producto VALUES (56,'Aspiradora Robot','Samsung Ecuador','Hogar',750,2,'17000000004');
-INSERT INTO producto VALUES (57,'Tablet Galaxy Lite','Samsung Ecuador','Tecnologia',390,7,'17000000004');
-INSERT INTO producto VALUES (58,'Cargador Inalámbrico','Samsung Ecuador','Tecnologia',85,20,'17000000004');
-INSERT INTO producto VALUES (59,'Router WiFi','Samsung Ecuador','Tecnologia',210,9,'17000000004');
-INSERT INTO producto VALUES (60,'Smart Plug','Samsung Ecuador','Smart Home',95,15,'17000000004');
+(51,'Parlante Bluetooth','Samsung Ecuador','Audio',190,14,'17000000004'),
+(52,'Sound Tower','Samsung Ecuador','Audio',560,4,'17000000004'),
+(53,'Audífonos Inalámbricos','Samsung Ecuador','Audio',230,10,'17000000004'),
+(54,'Reloj Inteligente','Samsung Ecuador','Tecnologia',320,6,'17000000004'),
+(55,'Cámara de Seguridad','Samsung Ecuador','Tecnologia',280,8,'17000000004'),
+(56,'Aspiradora Robot','Samsung Ecuador','Hogar',750,2,'17000000004'),
+(57,'Tablet Galaxy Lite','Samsung Ecuador','Tecnologia',390,7,'17000000004'),
+(58,'Cargador Inalámbrico','Samsung Ecuador','Tecnologia',85,20,'17000000004'),
+(59,'Router WiFi','Samsung Ecuador','Tecnologia',210,9,'17000000004'),
+(60,'Smart Plug','Samsung Ecuador','Smart Home',95,15,'17000000004');

@@ -1,10 +1,21 @@
-create database TecnoHogarCenter;
+-- =========================
+-- CREACIÓN DE LA BASE DE DATOS
+-- =========================
+CREATE DATABASE TecnoHogarCenter;
 
+-- =========================
+-- MOSTRAR BASES DE DATOS
+-- =========================
 SHOW DATABASES;
 
-use TecnoHogarCenter;
+-- =========================
+-- SELECCIÓN DE BASE DE DATOS
+-- =========================
+USE TecnoHogarCenter;
 
-#Creación de Tablas 
+-- =========================
+-- TABLA DUEÑO
+-- =========================
 CREATE TABLE dueño (
     cedula INT PRIMARY KEY,
     nombre VARCHAR(50),
@@ -12,6 +23,9 @@ CREATE TABLE dueño (
     telefono VARCHAR(15)
 );
 
+-- =========================
+-- TABLA PROVEEDORES
+-- =========================
 CREATE TABLE proveedores (
     RUC CHAR(13) PRIMARY KEY,
     nombre VARCHAR(50),
@@ -19,14 +33,20 @@ CREATE TABLE proveedores (
     correo VARCHAR(50)
 );
 
-CREATE Table cliente(
-    id_cliente int PRIMARY key,
+-- =========================
+-- TABLA CLIENTE
+-- =========================
+CREATE TABLE cliente (
+    id_cliente INT PRIMARY KEY,
     nombre VARCHAR(50),
     telefono VARCHAR(13),
-    correo VARCHAR (50),
+    correo VARCHAR(50),
     direccion VARCHAR(50)
 );
 
+-- =========================
+-- TABLA PRODUCTO
+-- =========================
 CREATE TABLE producto (
     id_producto INT PRIMARY KEY,
     nombre VARCHAR(50),
@@ -37,6 +57,10 @@ CREATE TABLE producto (
     proveedor_id CHAR(13),
     FOREIGN KEY (proveedor_id) REFERENCES proveedores(RUC)
 );
+
+-- =========================
+-- TABLA EMPLEADO
+-- =========================
 CREATE TABLE empleado (
     id_empleado INT PRIMARY KEY,
     nombre VARCHAR(50),
@@ -46,38 +70,37 @@ CREATE TABLE empleado (
     hora_salida TIME
 );
 
+-- =========================
+-- TABLA PROVEEDOR_PRODUCTOS
+-- =========================
 CREATE TABLE proveedor_productos (
     proveedor_ruc CHAR(13),
     producto_id INT,
     proveedor_precio DECIMAL(10,2),
     lote INT,
     plazo INT,
-
     PRIMARY KEY (proveedor_ruc, producto_id),
-
-    CONSTRAINT pp_proveedor_fk
-        FOREIGN KEY (proveedor_ruc)
-        REFERENCES proveedores(RUC),
-
-    CONSTRAINT pp_producto_fk
-        FOREIGN KEY (producto_id)
-        REFERENCES producto(id_producto)
+    FOREIGN KEY (proveedor_ruc) REFERENCES proveedores(RUC),
+    FOREIGN KEY (producto_id) REFERENCES producto(id_producto)
 );
 
+-- =========================
+-- TABLA PRODUCTOS_FRECUENTES
+-- =========================
 CREATE TABLE productos_frecuentes (
     cedula_cliente INT,
     id_producto INT,
     frecuencia ENUM('DIA','SEM','MES'),
     cantidad INT,
     descuento DECIMAL(5,2) DEFAULT 0,
-
     PRIMARY KEY (cedula_cliente, id_producto),
-
     FOREIGN KEY (cedula_cliente) REFERENCES cliente(id_cliente),
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
-#Tabla Empresa Guarda los datos del negocio
+-- =========================
+-- TABLA EMPRESA
+-- =========================
 CREATE TABLE empresa (
     ruc CHAR(13) PRIMARY KEY,
     nombre VARCHAR(100),
@@ -86,44 +109,33 @@ CREATE TABLE empresa (
     correo VARCHAR(50)
 );
 
-#Tabla Facturas 
+-- =========================
+-- TABLA FACTURAS
+-- =========================
 CREATE TABLE facturas (
     facturanumero CHAR(10) PRIMARY KEY,
     fecha DATE,
     cliente_id INT,
-    total DECIMAL(10,2)
+    total DECIMAL(10,2),
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id_cliente)
 );
 
-ALTER TABLE facturas
-ADD CONSTRAINT factura_cliente_fk
-FOREIGN KEY (cliente_id) REFERENCES cliente(id_cliente);
-
-#Tabla Factuardetalle Guarda los productos que se venden en cada factura
+-- =========================
+-- TABLA FACTURADETALLE
+-- =========================
 CREATE TABLE facturadetalle (
     facturanumero CHAR(10),
     producto_id INT,
-    cantidad INT,
-    precio DECIMAL(10,2),
-    PRIMARY KEY (facturanumero, producto_id)
+    cantidad INT CHECK (cantidad > 0),
+    precio DECIMAL(10,2) CHECK (precio > 0),
+    PRIMARY KEY (facturanumero, producto_id),
+    FOREIGN KEY (facturanumero) REFERENCES facturas(facturanumero),
+    FOREIGN KEY (producto_id) REFERENCES producto(id_producto)
 );
 
-ALTER TABLE facturadetalle
-ADD CONSTRAINT fd_factura_fk
-FOREIGN KEY (facturanumero) REFERENCES facturas(facturanumero);
-
-ALTER TABLE facturadetalle
-ADD CONSTRAINT fd_producto_fk
-FOREIGN KEY (producto_id) REFERENCES producto(id_producto);
-
-# Validar que la cantidad sea mayor a 0
-ALTER TABLE facturadetalle
-ADD CONSTRAINT cantidad_ck
-CHECK (cantidad > 0);
-#Validar que el precio sea mayor a 0
-ALTER TABLE facturadetalle
-ADD CONSTRAINT precio_ck
-CHECK (precio > 0);
-
+-- =========================
+-- TABLA PRODUCTOS_ALTERNATIVOS
+-- =========================
 CREATE TABLE productos_alternativos (
     producto_id INT,
     alternativa INT,
@@ -132,214 +144,144 @@ CREATE TABLE productos_alternativos (
     FOREIGN KEY (alternativa) REFERENCES producto(id_producto)
 );
 
-#Tabla de Clinetes frecuentes 
+-- =========================
+-- TABLA CLIENTES_FRECUENTES
+-- =========================
 CREATE TABLE clientes_frecuentes (
     cliente_id INT,
     producto_id INT,
-    frecuencia CHAR(3),        -- Ej: SEM (semanal), MEN (mensual)
+    frecuencia CHAR(3),
     cantidad INT,
-    descuento DECIMAL(5,2),
+    descuento DECIMAL(5,2) DEFAULT 0,
     PRIMARY KEY (cliente_id, producto_id),
     FOREIGN KEY (cliente_id) REFERENCES cliente(id_cliente),
     FOREIGN KEY (producto_id) REFERENCES producto(id_producto)
 );
 
-ALTER TABLE clientes_frecuentes
-MODIFY descuento DECIMAL(5,2) DEFAULT 0;
-#Datos del DUEÑO 
-INSERT INTO dueño VALUES (1752004828, 'Roger Tallana', 'Dueño', '0998626028');
+-- =========================
+-- DATOS DEL DUEÑO
+-- =========================
+INSERT INTO dueño
+VALUES (1752004828, 'Roger Tallana', 'Dueño', '0998626028');
 
-#Registro de Provedores
-INSERT INTO proveedores
-VALUES ('17000000001', 'Indurama Ecuador', 'Jose Cortez', 'indurama@gmail.ec');
+-- =========================
+-- REGISTRO DE PROVEEDORES
+-- =========================
+INSERT INTO proveedores VALUES
+('17000000001','Indurama Ecuador','Jose Cortez','indurama@gmail.ec'),
+('17000000002','Mabe Ecuador','Armando Tapia','mabe@gmail.ec'),
+('17000000003','LG Ecuador','Luis Caza','lgecuador@gmail.ec'),
+('17000000004','Samsung Ecuador','Amelia Sanchez','samsung@gmail.ec');
 
-INSERT INTO proveedores
-VALUES ('17000000002', 'Mabe Ecuador', 'Armando Tapia', 'mabe@gmail.ec');
+-- =========================
+-- REGISTRO DE PRODUCTOS
+-- =========================
+INSERT INTO producto VALUES
+(1,'Cocina de gas','Indurama','Linea Blanca',300,5,'17000000001'),
+(2,'Refrigeradora','Indurama','Linea Blanca',450,4,'17000000001'),
+(3,'Lavadora','Indurama','Linea Blanca',520,6,'17000000001'),
+(4,'Secadora','Indurama','Linea Blanca',540,5,'17000000001'),
+(5,'Microondas','Indurama','Electro Menores',350,7,'17000000001'),
+(6,'Refrigeradora','Mabe Ecuador','Linea Blanca',320,5,'17000000002'),
+(7,'Lavadora Automática','Mabe Ecuador','Linea Blanca',450,6,'17000000002'),
+(8,'Cocina Eléctrica','Mabe Ecuador','Linea Blanca',530,4,'17000000002'),
+(9,'Microondas','Mabe Ecuador','Electro Menores',440,3,'17000000002'),
+(10,'Licuadora','Mabe Ecuador','Electro Menores',250,7,'17000000002'),
+(11,'Refrigeradora Smart','LG Ecuador','Linea Blanca',520,5,'17000000003'),
+(12,'Lavadora Smart','LG Ecuador','Linea Blanca',550,5,'17000000003'),
+(13,'Televisor LED','LG Ecuador','Electro Menores',430,4,'17000000003'),
+(14,'Televisor Smart TV','LG Ecuador','Electro Menores',440,3,'17000000003'),
+(15,'Barra de sonido','LG Ecuador','Linea Gris',250,7,'17000000003'),
+(16,'Televisor Smart TV','Samsung Ecuador','Linea Gris',320,4,'17000000004'),
+(17,'Aire acondicionado','Samsung Ecuador','Climatizacion',250,6,'17000000004'),
+(18,'Celular Samsung Galaxy','Samsung Ecuador','Tecnologia',530,9,'17000000004'),
+(19,'Tablet','Samsung Ecuador','Tecnologia',440,8,'17000000004'),
+(20,'Monitor','Samsung Ecuador','Linea Gris',150,10,'17000000004');
 
-INSERT INTO proveedores
-VALUES ('17000000003', 'LG Ecuador', 'Luis Caza', 'lgecuador@gmail.ec');
+-- =========================
+-- REGISTRO DE CLIENTES
+-- =========================
+INSERT INTO cliente VALUES
+(1752004956,'Jorge Lopez','0954123689','jorge12@gmail.com','Pintado'),
+(1726485103,'Rosita Raza','0925147852','rosa13@gmail.com','Mascota'),
+(1701245741,'Maritza Alvaro','0923145781','maritza14@gmail.com','Magdalena');
 
-INSERT INTO proveedores
-VALUES ('17000000004', 'Samsung Ecuador', 'Amelia Sanchez', 'samsung@gmail.ec');
+-- =========================
+-- REGISTRO DE EMPLEADOS
+-- =========================
+INSERT INTO empleado VALUES
+(1720245698,'Jeneffer Tallana','Vendedor',200,'07:00:00','14:00:00'),
+(1752004879,'Isaac Lema','Vendedor',200,'02:00:00','19:00:00'),
+(1752003610,'Amelia Vizcaino','Cajero',250,'07:00:00','14:00:00'),
+(1720364851,'Paulo Taipe','Cajero',250,'02:00:00','19:00:00'),
+(1120336047,'Nathaly Vizcaino','Encargado',500,'09:00:00','18:00:00'),
+(1520013690,'Isaac Lema','Administrador',600,'10:00:00','19:00:00'),
+(1752004828,'Roger Tallana','Dueño',0,'00:00:00','00:00:00');
 
-#Registro de Productos
-INSERT INTO producto
-VALUES (1, 'Cocina de gas', 'Indurama', 'Linea Blanca', 300, 5, '17000000001');
-
-INSERT INTO producto
-VALUES (2, 'Refrigeradora', 'Indurama', 'Linea Blanca', 450, 4, '17000000001');
-
-INSERT INTO producto
-VALUES (3, 'Lavadora', 'Indurama', 'Linea Blanca', 520, 6, '17000000001');
-
-INSERT INTO producto
-VALUES (4, 'secadora', 'Indurama', 'Linea Blanca', 540, 5, '17000000001');
-
-INSERT INTO producto
-VALUES (5, 'Microondas', 'Indurama', 'Electro Menores', 350, 7, '17000000001');
- 
-
-INSERT INTO producto
-VALUES (6, 'Refrigeradora', 'Mabe Ecuador', 'Linea Blanca', 320, 5, '17000000002');
-
-INSERT INTO producto
-VALUES (7, 'Lavadora Automática', 'Mabe Ecuador', 'Linea Blanca', 450, 6, '17000000002');
-
-INSERT INTO producto
-VALUES (8, 'Cocina Electrica', 'Mabe Ecuador', 'Linea Blanca', 530, 4, '17000000002');
-
-INSERT INTO producto
-VALUES (9, 'Microondas', 'Mabe Ecuador', 'Electro Menores', 440, 3, '17000000002');
-
-INSERT INTO producto
-VALUES (10, 'Licuadora', 'Mabe Ecuador', 'Electro Menores', 250, 7, '17000000002');
- 
-
-INSERT INTO producto
-VALUES (11, 'Refrigeradora Smart', 'LG Ecuador', 'Linea Blanca', 520, 5, '17000000003');
-
-INSERT INTO producto
-VALUES (12, 'Lavadora Smart', 'LG Ecuador', 'Linea Blanca', 550, 5, '17000000003');
-
-INSERT INTO producto
-VALUES (13, 'Televisor LED', 'LG Ecuador', 'Electro menores', 430, 4, '17000000003');
-
-INSERT INTO producto
-VALUES (14, 'TelevisorSmart tv', 'LG Ecuador', 'Electro Menores', 440, 3, '17000000003');
-
-INSERT INTO producto
-VALUES (15, 'Barra de sonido', 'LG Ecuador', 'Linea Gris', 250, 7, '17000000003');
-
-
-INSERT INTO producto
-VALUES (16, 'TelevisorSmart tv', 'Samsung Ecuador', 'Linea Gris', 320, 4, '17000000004');
-
-INSERT INTO producto
-VALUES (17, 'Aire acondicionado', 'Samsung Ecuador', 'Climatizacion', 250, 6, '17000000004');
-
-INSERT INTO producto
-VALUES (18, 'Celular Samsung Galaxy', 'Samsung Ecuador', 'Tecnologia', 530, 9, '17000000004');
-
-INSERT INTO producto
-VALUES (19, 'Tablet', 'Samsung Ecuador', 'Tecnologia', 440, 8, '17000000004');
-
-INSERT INTO producto
-VALUES (20, 'Monitor', 'Samsung Ecuador', 'Linea Gris', 150, 10, '17000000004');
-
-#Registrp de Cliente
-INSERT INTO cliente 
-VALUES( 1752004956, 'Jorge Lopez', '0954123689', 'jorge12@gmail.com', 'Pintado');
-INSERT INTO cliente
-VALUES( 1726485103, 'Rosita Raza', '0925147852', 'rosa13@gmail.com', 'Mascota');
-INSERT INTO cliente
-VALUES( 1701245741, 'Maritza Alvaro', '0923145781', 'maritza14@gmail.com', 'Magdalena');
-
-#Registo de Empleados
-INSERT INTO empleado
-VALUES( 1720245698, 'Jeneffer Tallana', 'Vendedor', 200, '07:00:00', '14:00:00');
-
-INSERT INTO empleado
-VALUES( 1752004879, 'Isaac Lema', 'Vendedor', 200, '02:00:00', '19:00:00');
-
-INSERT INTO empleado
-VALUES( 1752003610, 'Amelia Vizcaino', 'Cajero', 250, '07:00:00', '14:00:00');
-
-INSERT INTO empleado
-VALUES( 1720364851, 'Paulo Taipe', 'cajero', 250, '02:00:00', '19:00:00');
-
-INSERT INTO empleado
-VALUES( 1120336047, 'Nathaly Vizcaino', 'Encargado', 500, '09:00:00', '18:00:00');
-
-INSERT INTO empleado
-VALUES( 1520013690, 'Isaac Lema', 'Administrador', 600, '10:00:00', '19:00:00');
-
-INSERT INTO empleado (id_empleado, nombre, cargo, sueldo, hora_entrada, hora_salida, id_jefe)
-VALUES (1752004828, 'Roger Tallana', 'Dueño', 0, '00:00:00', '00:00:00', NULL);
-
-
-#Registro de Empresa 
+-- =========================
+-- REGISTRO DE EMPRESA
+-- =========================
 INSERT INTO empresa
-VALUES ('17999999999', 'Tecno Hogar Center', 'Av. Amazonas y Patria', '022345678', 'contacto@tecnohogar.ec');
+VALUES ('17999999999','Tecno Hogar Center','Av. Amazonas y Patria','022345678','contacto@tecnohogar.ec');
 
-#Registro Relación cliente ↔ facturas (FOREIGN KEY)
-INSERT INTO facturas
-VALUES ('0000000001', '2025-01-16', 1752004956, 600);
+-- =========================
+-- REGISTRO DE FACTURAS
+-- =========================
+INSERT INTO facturas VALUES
+('0000000001','2025-01-16',1752004956,600),
+('0000000002','2025-12-05',1701245741,900),
+('0000000003','2025-12-11',1726485103,440);
 
-INSERT INTO facturas
-VALUES ('0000000002', '2025-12-05', 1701245741, 900);
+-- =========================
+-- REGISTRO DE FACTURADETALLE
+-- =========================
+INSERT INTO facturadetalle VALUES
+('0000000001',1,2,300),
+('0000000002',2,2,900),
+('0000000003',9,1,440);
 
-INSERT INTO facturas
-VALUES ('0000000003', '2025-12-11', 1726485103, 440);
+-- =========================
+-- REGISTRO DE PRODUCTOS ALTERNATIVOS
+-- =========================
+INSERT INTO productos_alternativos VALUES
+(2,6),(13,16),(5,9);
 
-#Registro Facturadetalle 
-INSERT INTO facturadetalle
-VALUES ('0000000001', 1, 2, 300);
+-- =========================
+-- REGISTRO DE CLIENTES FRECUENTES
+-- =========================
+INSERT INTO clientes_frecuentes VALUES
+(1701245741,2,'MEN',2,5.00),
+(1726485103,9,'SEM',1,10.00);
 
-INSERT INTO facturadetalle
-VALUES ('0000000002', 2, 2, 900);
+-- =========================
+-- REGISTRO PROVEEDOR_PRODUCTOS
+-- =========================
+INSERT INTO proveedor_productos VALUES
+('17000000001',1,250.00,5,60),
+('17000000001',2,380.00,4,90),
+('17000000002',6,290.00,5,98),
+('17000000003',11,480.00,5,93),
+('17000000004',16,300.00,4,100);
 
-INSERT INTO facturadetalle
-VALUES ('0000000003', 9, 1, 440);
+-- =========================
+-- REGISTRO DE PRODUCTOS FRECUENTES
+-- =========================
+INSERT INTO productos_frecuentes VALUES
+(1701245741,2,'MES',2,5.00),
+(1726485103,9,'SEM',1,10.00);
 
-#Registro maayor a 0 y menor a 0 
-   #Refrigeradora Indurama puede ser sustituida por Refrigeradora Mabe
-INSERT INTO productos_alternativos 
-VALUES (2, 6);
-
-   #Televisor LG puede ser sustituido por Televisor Samsung
-INSERT INTO productos_alternativos 
-VALUES (13, 16);
-
-   #Microondas Indurama puede ser sustituido por Microondas Mabe
-INSERT INTO productos_alternativos 
-VALUES (5, 9);
-
-#Registro de clientes frecuentes 
-       -- Maritza Alvaro 2 Refrigeradoras Indurama cada mes con 5% de descuento
-INSERT INTO clientes_frecuentes 
-VALUES (1701245741, 2, 'MEN', 2, 5.00);
-
-       -- Rosita Raza 1 Microondas Mabe cada semana con 10% de descuento
-INSERT INTO clientes_frecuentes 
-VALUES (1726485103, 9, 'SEM', 1, 10.00);
-
-#Registro PROVEEDOR_PRODUCTOS
-INSERT INTO proveedor_productos
-VALUES ('17000000001', 1, 250.00, 5, 60);
-
-INSERT INTO proveedor_productos
-VALUES ('17000000001', 2, 380.00, 4, 90);
-
-INSERT INTO proveedor_productos
-VALUES ('17000000002', 6, 290.00, 5, 98);
-
-INSERT INTO proveedor_productos
-VALUES ('17000000003', 11, 480.00, 5, 93);
-
-INSERT INTO proveedor_productos
-VALUES ('17000000004', 16, 300.00, 4, 100);
-
-#Registro de Productos Fecuentes 
-INSERT INTO productos_frecuentes
-VALUES (1752004956, 1, 'MES', 2, 0.00);
-
-INSERT INTO productos_frecuentes
-VALUES (1701245741, 2, 'MES', 2, 5.00);
-
-INSERT INTO productos_frecuentes
-VALUES (1726485103, 9, 'SEM', 1, 10.00);
-
-#Comado para ejecutar tabla 
+-- =========================
+-- CONSULTAS
+-- =========================
 SELECT * FROM dueño;
-select * from producto;
-select * from cliente;
-select * from proveedores;
-select * from empleado;
+SELECT * FROM producto;
+SELECT * FROM cliente;
+SELECT * FROM proveedores;
+SELECT * FROM empleado;
 SELECT * FROM empresa;
-SELECT *  FROM facturas;
+SELECT * FROM facturas;
 SELECT * FROM facturadetalle;
 SELECT * FROM productos_alternativos;
 SELECT * FROM clientes_frecuentes;
 SELECT * FROM proveedor_productos;
 SELECT * FROM productos_frecuentes;
-

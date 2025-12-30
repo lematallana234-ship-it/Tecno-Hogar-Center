@@ -27,14 +27,14 @@ WHERE id_cliente = 1752004956;
 --- Consultar nombre y precio del producto por ID
 SELECT nombre, precio
 FROM producto
-WHERE id_producto = 2;
+WHERE id_producto = 8;
 
 --- Clientes cuyo nombre inicia con A
 SELECT id_cliente, nombre
 FROM cliente
-WHERE nombre LIKE 'L%';
+WHERE nombre LIKE 'A%';
 
---- Productos que inician con M
+--- Productos que inician con #
 SELECT id_producto, nombre
 FROM producto
 WHERE nombre LIKE 'C%';
@@ -116,9 +116,12 @@ SELECT
     c.nombre,
     p.nombre AS producto,
     pf.descuento
-FROM productos_frecuentes pf
-JOIN cliente c ON c.id_cliente = pf.cedula_cliente
-JOIN producto p ON p.id_producto = pf.id_producto;
+FROM cliente c
+LEFT JOIN productos_frecuentes pf
+    ON c.id_cliente = pf.cedula_cliente
+LEFT JOIN producto p
+    ON p.id_producto = pf.id_producto;
+
 
 --- ===============================
 --- FACTURAS
@@ -200,3 +203,80 @@ WHERE nombre IN ('Carlos Mena')
   AND id_cliente IN (1710000005, 1710000001);
 
 SELECT * FROM vista_clientes_condiciones_in;
+
+#Valor monetario por producto vendido (detalle de factura)
+ --Cuánto dinero genera cada producto vendido (cantidad × precio).
+SELECT
+    fd.producto_id,
+    fd.cantidad,
+    fd.precio,
+    fd.cantidad * fd.precio AS subtotal
+FROM facturadetalle fd;
+
+
+#Total vendido por producto
+ --Cuánto dinero total ha generado cada producto sumando todas las ventas.
+SELECT
+    p.id_producto,
+    p.nombre,
+    SUM(fd.cantidad * fd.precio) AS total_vendido
+FROM facturadetalle fd
+JOIN producto p ON p.id_producto = fd.producto_id
+GROUP BY p.id_producto, p.nombre;
+
+
+#Cliente que más compra (el que más dinero gasta)
+  --Quién es el mejor cliente del almacén.
+SELECT
+    f.cliente_id,
+    c.nombre,
+    SUM(fd.cantidad * fd.precio) AS total_comprado
+FROM facturadetalle fd
+JOIN facturas f 
+    ON f.facturanumero = fd.facturanumero
+JOIN cliente c 
+    ON c.id_cliente = f.cliente_id
+GROUP BY f.cliente_id, c.nombre
+ORDER BY total_comprado DESC
+LIMIT 1;
+
+    #Kardex de productos (entradas y salidas)
+    --Movimiento del stock de un producto (ventas = salidas).
+    CREATE OR REPLACE VIEW v_mov_ventas AS
+    SELECT
+        f.fecha,
+        fd.producto_id,
+        p.nombre AS producto,
+        f.facturanumero,
+        'VENTA' AS tipo_mov,
+        fd.cantidad AS salida
+    FROM facturadetalle fd
+    LEFT JOIN facturas f 
+        ON f.facturanumero = fd.facturanumero
+    LEFT JOIN producto p 
+        ON p.id_producto = fd.producto_id;
+
+    SELECT * 
+    FROM v_mov_ventas
+    ORDER BY fecha;
+
+    SELECT 
+        fecha,
+        producto,
+        facturanumero,
+        salida
+    FROM v_mov_ventas;
+
+#Saldo acumulado (stock lógico)
+  --Cómo va bajando el stock con cada venta.
+SELECT
+    fecha,
+    producto_id,
+    producto,
+    tipo_mov,
+    salida,
+    SUM(-salida) OVER (
+        PARTITION BY producto_id
+        ORDER BY fecha
+    ) AS saldo
+FROM v_mov_ventas;
